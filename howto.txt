@@ -1,0 +1,44 @@
+ssh -p 7822  root@server.vidulusludorum.com
+
+sudo apt update
+
+
+sudo apt install curl -y
+apt --fix-broken install
+sudo apt install curl -y
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+(krieg ein bloedes migration message)
+sudo apt-get install -y nodejs
+
+(hat scheinbar geklappt)
+node -v
+	v18.17.1
+npm -v
+	9.6.7
+python --version
+	Python 3.10.6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
