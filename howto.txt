@@ -77,13 +77,37 @@ q (to end output)
 	sudo systemctl enable nginx (fuer startup)
 	sudo systemctl disable nginx
 
-____ activate node app in nginx conf
-	server {
-    listen 443 ssl;
-		server_name server.vidulusludorum.com;
-		ssl_certificate "/etc/letsencrypt/live/vidulusludorum.com/fullchain.pem";
-		ssl_certificate_key "/etc/letsencrypt/live/vidulusludorum.com/privkey.pem";
+8____ pm2
+	sudo npm i pm2 -g
+	pm2 start app1/app1.js --name app (or whatever your file name)
+	# Other pm2 commands
+	pm2 show app
+	pm2 status
+	pm2 restart app
+	pm2 stop app
+	pm2 delete app (zeigt sie nicht mehr in der liste)
+	pm2 logs (Show log stream)
+	pm2 flush (Clear logs)
 
+
+ps aux | grep python
+pgrep -f gunicorn
+pkill -f gunicorn
+pgrep -f node
+kill -9 PID
+curl https://server.vidulusludorum.com
+curl http://localhost:3000
+netstat -tuln
+sudo lsof -i :3000
+sudo kill pid1 pid2 pid3
+
+____ activate node app in nginx conf: see location uncommented
+(to activate static web site switch to location and root below!)
+	server {
+		server_name server.vidulusludorum.com;
+
+		# node js app listening on port 3000
+		#root /root/app1; (brauch ich garnicht)
 		location / {
 			proxy_pass http://localhost:3000; 
 			proxy_http_version 1.1;
@@ -92,13 +116,23 @@ ____ activate node app in nginx conf
 			proxy_set_header Host $host;
 			proxy_cache_bypass $http_upgrade;
 		}
-	
-		ssl_session_cache shared:SSL:1m;
-		ssl_session_timeout  10m;
-		ssl_ciphers PROFILE=SYSTEM;
-		ssl_prefer_server_ciphers on;
-	}
 
+		# static web site default location
+		# root /var/www/html;
+		# gzip on;
+		# index index.html index.htm index.nginx-debian.html;
+		# location / {
+		# 	try_files $uri $uri/ =404;
+		# }
+	
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/server.vidulusludorum.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/server.vidulusludorum.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+	}
 
 ____ install pip
 sudo apt update
