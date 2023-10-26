@@ -19084,6 +19084,7 @@ function detectSessionType() {
   let loc = window.location.href;
   //console.log('loc',loc);
   DA.sessionType =
+    loc.includes('vidulus') ? 'vps' :
     loc.includes('telecave') ? 'telecave' : loc.includes('8080') ? 'php'
       : loc.includes(':40') ? 'nodejs'
         : loc.includes(':60') ? 'flask' : 'live';

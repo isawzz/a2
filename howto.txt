@@ -108,6 +108,7 @@ pkill -f gunicorn
 pgrep -f node
 kill -9 PID
 curl https://server.vidulusludorum.com
+https://server.vidulusludorum.com/
 curl http://localhost:3000
 netstat -tuln
 sudo lsof -i :3000
