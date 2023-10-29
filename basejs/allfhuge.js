@@ -9678,6 +9678,7 @@ function autocomplete(inp, arr) {
   inp = toElem(inp);
   inp.addEventListener('input', e => {
     var a, b, i, val = this.value;
+    //console.log('val',val)
     autocomplete_closeAllLists();
     if (!val) { return false; }
     currentFocus = -1;
@@ -42387,6 +42388,20 @@ function mget_map(center = Geo.places.tuerkenschanzpark, zoom = 17) {
   let map = M.map = L.map('map').setView(center, zoom);
   return map;
 }
+async function mGetFiles(server,dir){
+	let data = await mGetJsonCors(`${server}/filenames?directory=${dir}`);
+	return data.files;
+}
+async function mGetJsonCors(url){
+	let res = await fetch(url, {
+		method: 'GET',
+		headers: { 'Content-Type': 'application/json' },
+		mode: 'cors' // Set CORS mode to enable cross-origin requests
+	});
+	let json = await res.json();
+	//console.log('json',json)
+	return json;
+}
 function mGetStyle(elem, prop) {
   let val;
   elem = toElem(elem);
@@ -55934,7 +55949,7 @@ function runcode(code, callback = null) {
 function runderkreis(color, id) {
   return `<div id=${id} style='width:20px;height:20px;border-radius:50%;background-color:${color};color:white;position:absolute;left:0px;top:0px;'>` + '' + "</div>";
 }
-function rUniqueId(n) { return rChoose(toLetters('0123456789abcdefghijklmnopqABCDEFGHIJKLMNOPQRSTUVWXYZ_'), n).join(''); }
+function rUniqueId(n=10) { return rChoose(toLetters('0123456789abcdefghijklmnopqABCDEFGHIJKLMNOPQRSTUVWXYZ_'), n).join(''); }
 async function runNextSeries(listSeries, series, from, to) {
   let timeOUT = 500;
   if (isEmpty(listSeries)) {
@@ -64170,7 +64185,7 @@ function test_ui_extended() {
   onresize = create_left_side_extended;
   create_left_side_extended();
 }
-function test0() {
+function test0_addToCollection() {
   dTable.onclick = game_add_default_item;
 }
 function test0_ari_flip_one_card() {
@@ -71782,7 +71797,10 @@ function valfi() {
   return null;
 }
 function valnwhite() {
-  for (const arg of arguments) if (isdef(arg) && !isEmptyOrWhiteSpace(arg)) return arg;
+  for (const arg of arguments) {
+    if (nundef(arg) || isEmpty(arg) || isWhiteSpace(arg)) continue;
+    return arg;
+  }
   return null;
 }
 function valToString(n) { if (isFractionType(n)) return getTextForFractionX(n.n, n.d); else return n; }

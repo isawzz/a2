@@ -108,7 +108,6 @@ pkill -f gunicorn
 pgrep -f node
 kill -9 PID
 curl https://server.vidulusludorum.com
-https://server.vidulusludorum.com/
 curl http://localhost:3000
 netstat -tuln
 sudo lsof -i :3000
@@ -116,6 +115,9 @@ sudo kill pid1 pid2 pid3
 
 kex connection reset ... goto a2 dashboard and restart vps
 
+ssh -p 7822  root@server.vidulusludorum.com
+q (to end output)
+https://server.vidulusludorum.com/
 
 
 
