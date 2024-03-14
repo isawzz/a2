@@ -1,4 +1,5 @@
 ssh -p 7822  root@server.vidulusludorum.com
+wGN17
 q (to end output)
 
 1_____ node js
