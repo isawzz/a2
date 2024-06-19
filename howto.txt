@@ -1,6 +1,7 @@
 ssh -p 7822  root@server.vidulusludorum.com
 wGN17
 q (to end output)
+pm2 start ode/app.js --name nodejs (or whatever your file name)
 
 1_____ node js
 	sudo apt update
